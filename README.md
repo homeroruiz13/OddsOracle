@@ -1,82 +1,70 @@
-# OddsOracle
-Our project collects Prize Picks lines and analyzes NBA team and player stats, hit rates, and other key metrics to forecast betting outcomes. Using advanced predictive analytics, we uncover trends and insights that empower users to make informed bets and gain a competitive edge.
+# Getting Started with Create React App
 
-# 🏀 NBA Prize Picks Prediction Website
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## 📌 Overview
-The **NBA Prize Picks Prediction Website** is a platform that provides advanced analytics, AI-driven predictions, and community insights for NBA player props. Designed for both casual and experienced bettors, the site helps users make informed decisions on **over/under** player props for Prize Picks.
+## Available Scripts
 
-## 🚀 Features
-### 🔥 **Predictions & Analytics**
-- AI-generated and expert NBA player prop predictions
-- Categorized by **Points, Rebounds, Assists, Steals/Blocks, Fantasy Score**
-- Real-time **confidence ratings** and data-driven insights
+In the project directory, you can run:
 
-### 📊 **Player Stats & Matchup Insights**
-- Historical **over/under trends** per player
-- **Game logs, injury reports, and rest days**
-- **Team vs. Position Defense Stats** to analyze favorable matchups
+### `npm start`
 
-### 🛠 **Betting Tools & Resources**
-- **Line Movement Tracker** to monitor shifting Prize Picks odds
-- **EV (Expected Value) Calculator** for smarter bets
-- **Back-to-Back & Pace Insights** for player performance predictions
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### 🌍 **Community & Social Features**
-- Users can **submit their own predictions** & vote on best picks
-- Community leaderboard for **top-performing predictors**
-- Discussion forums for sharing insights & strategies
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-### 📈 **My Picks (User Dashboard)**
-- **Track and analyze personal picks** over time
-- Favorite player props for quick access
-- Performance analytics to refine strategies
+### `npm test`
 
-### 🏆 **Premium Section (VIP Picks) [Optional]**
-- Access to **high-accuracy expert picks**
-- Private **Discord/Telegram** for advanced discussions
-- Exclusive **betting models & in-depth analysis**
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## 🛠 Tech Stack
-- **Frontend:** React.js, Tailwind CSS
-- **Backend:** Node.js, Express.js
-- **Database:** PostgreSQL / MongoDB
-- **API Integrations:** NBA Stats API, Prize Picks API (if available)
-- **Authentication:** Firebase / OAuth
+### `npm run build`
 
-## 📌 Installation & Setup
-```sh
-# Clone the repository
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-# Navigate to the project folder
-cd nba-prizepicks
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-# Install dependencies
-npm install
+### `npm run eject`
 
-# Start the development server
-npm start
-```
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-## 🎯 Roadmap
-- [ ] Implement AI-driven prediction models
-- [ ] Add live injury & lineup updates
-- [ ] Enhance UI/UX for better user experience
-- [ ] Introduce subscription-based premium features
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## 🤝 Contributing
-We welcome contributions! To contribute:
-1. Fork the repository
-2. Create a new branch (`feature/your-feature`)
-3. Commit your changes
-4. Open a Pull Request
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-## 📄 License
-This project is licensed under the **MIT License**.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## 📬 Contact & Support
-For any questions, feel free to reach out:
-- 📧 Email: support@nbapredictions.com
-- 🐦Github: @Homeroruiz13 @Jason-mluu
-- 🌍 Website: [Coming Soon]
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
