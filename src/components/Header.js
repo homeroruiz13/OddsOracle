@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isLoggedIn, login, logout, user } = useContext(AuthContext);
 
   return (
     <header className="bg-black text-white border-b border-gray-800">
@@ -36,12 +38,34 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <Link to="/my-picks" className="text-gray-300 hover:text-purple-400 font-medium">
-              My Picks
-            </Link>
-            <button className="bg-purple-600 hover:bg-purple-700 transition-colors text-white px-4 py-2 rounded-md font-medium">
-              Sign In
-            </button>
+            {isLoggedIn ? (
+              <>
+                <Link to="/my-picks" className="text-gray-300 hover:text-purple-400 font-medium">
+                  My Picks
+                </Link>
+                <span className="text-gray-400 text-sm hidden md:inline">
+                  Hi, {user?.user_metadata?.full_name || user?.email || 'User'}
+                </span>
+                <button 
+                  onClick={logout}
+                  className="bg-purple-600 hover:bg-purple-700 transition-colors text-white px-4 py-2 rounded-md font-medium"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/my-picks" className="text-gray-300 hover:text-purple-400 font-medium">
+                  My Picks
+                </Link>
+                <button 
+                  onClick={login}
+                  className="bg-purple-600 hover:bg-purple-700 transition-colors text-white px-4 py-2 rounded-md font-medium"
+                >
+                  Sign In
+                </button>
+              </>
+            )}
 
             <button
               className="md:hidden text-white"
@@ -111,6 +135,17 @@ const Header = () => {
               >
                 FAQ
               </Link>
+              {isLoggedIn && (
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-gray-300 px-3 py-2 rounded hover:bg-gray-800 hover:text-red-400 text-left"
+                >
+                  Sign Out
+                </button>
+              )}
             </div>
           </div>
         )}
