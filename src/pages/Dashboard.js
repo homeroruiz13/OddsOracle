@@ -146,26 +146,56 @@ const NBAPrizePicksDashboard = () => {
 
       {/* Main Dashboard Content */}
       <main className="container mx-auto px-4 py-6">
-        {/* Hero Section */}
-        <div className="bg-gradient-to-r from-blue-800 to-blue-600 rounded-lg p-6 text-white mb-8">
-          <div className="md:w-2/3">
-            <h2 className="text-3xl font-bold mb-2">
-              Make Smarter NBA PrizePicks
-            </h2>
-            <p className="text-xl mb-4">
-              Data-driven predictions to give you the edge
-            </p>
-            <p className="mb-6">
-              Our platform analyzes thousands of NBA data points and trends to
-              identify the highest-value player prop opportunities.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <button className="bg-green-500 hover:bg-green-600 px-6 py-2 rounded-md font-medium">
-                Today's Top NBA Picks
-              </button>
-              <button className="bg-white text-blue-800 px-6 py-2 rounded-md font-medium">
-                How It Works
-              </button>
+        {/* IMPROVED Hero Section */}
+        <div className="bg-gradient-to-r from-blue-900 to-indigo-800 rounded-xl shadow-lg overflow-hidden mb-8">
+          <div className="relative py-8 px-6 md:py-10 md:px-8">
+            {/* Background basketball pattern (pseudo-element styled with absolute positioning) */}
+            <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 bg-contain bg-no-repeat bg-right" 
+                 style={{backgroundImage: "url('https://via.placeholder.com/400')"}}></div>
+            
+            <div className="relative z-10 md:w-2/3">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3 text-white">
+                Make Smarter NBA PrizePicks
+              </h2>
+              <div className="h-1 w-20 bg-yellow-400 rounded mb-5"></div>
+              <p className="text-xl text-blue-100 font-medium mb-4">
+                Data-driven predictions to give you the edge
+              </p>
+              <p className="text-blue-100 mb-6 max-w-xl">
+                Our platform analyzes thousands of NBA data points and trends to
+                identify the highest-value player prop opportunities.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <button className="bg-green-500 hover:bg-green-600 transition-colors px-6 py-3 rounded-lg font-semibold text-white shadow-md hover:shadow-lg flex items-center">
+                  <span className="mr-2">Today's Top NBA Picks</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                <button className="bg-white hover:bg-blue-50 text-blue-800 border border-blue-200 px-6 py-3 rounded-lg font-semibold transition-colors shadow-md hover:shadow-lg">
+                  How It Works
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Stats Bar */}
+          <div className="bg-blue-800 py-3 px-4 md:px-8 flex flex-wrap justify-between items-center text-blue-100 text-sm">
+            <div className="flex items-center">
+              <span className="font-medium">Today's Games:</span>
+              <span className="ml-2">12</span>
+            </div>
+            <div className="flex items-center">
+              <span className="font-medium">Top Pick Success Rate:</span>
+              <span className="ml-2 text-green-400 font-bold">68%</span>
+            </div>
+            <div className="flex items-center">
+              <span className="font-medium">Community Picks:</span>
+              <span className="ml-2">4,328</span>
+            </div>
+            <div className="flex items-center">
+              <span className="text-yellow-300 font-medium">NBA Slate Starts in:</span>
+              <span className="ml-2 font-mono">3:42:18</span>
             </div>
           </div>
         </div>
