@@ -503,6 +503,7 @@ const NBAPrizePicksDashboard = () => {
         </div>
       </main>
 
+      
       {/* Footer */}
       <footer className="bg-gray-900 border-t border-gray-800 text-gray-400 py-6 mt-8">
         <div className="container mx-auto px-4">
