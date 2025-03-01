@@ -137,6 +137,11 @@ const NBAPrizePicksDashboard = () => {
     { id: "fantasy", label: "Fantasy" },
   ];
 
+  return (
+    <div className="min-h-screen bg-black text-white">
+      {/* Header/Navigation */}
+      {/* Header component will be imported separately */}
+
       {/* Main Dashboard Content */}
       <main className="container mx-auto px-4 py-6">
         {/* Hero Section */}
@@ -503,7 +508,6 @@ const NBAPrizePicksDashboard = () => {
         </div>
       </main>
 
-      
       {/* Footer */}
       <footer className="bg-gray-900 border-t border-gray-800 text-gray-400 py-6 mt-8">
         <div className="container mx-auto px-4">
