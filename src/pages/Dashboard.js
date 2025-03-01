@@ -137,33 +137,6 @@ const NBAPrizePicksDashboard = () => {
     { id: "fantasy", label: "Fantasy" },
   ];
 
-  return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Header/Navigation */}
-      <header className="bg-black border-b border-gray-800">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex justify-between items-center">
-            <div className="text-2xl font-bold text-purple-500">PrizePicks</div>
-            <nav className="hidden md:flex space-x-6">
-              <button className="text-gray-400 hover:text-white">NBA</button>
-              <button className="text-gray-400 hover:text-white">NFL</button>
-              <button className="text-gray-400 hover:text-white">MLB</button>
-              <button className="text-gray-400 hover:text-white">NHL</button>
-              <button className="text-gray-400 hover:text-white">SOCR</button>
-              <button className="text-gray-400 hover:text-white">GOLF</button>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <button className="bg-purple-600 text-white px-4 py-2 rounded-md font-medium hover:bg-purple-700">
-                Sign Up
-              </button>
-              <button className="text-purple-500 hover:text-purple-400">
-                Login
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Main Dashboard Content */}
       <main className="container mx-auto px-4 py-6">
         {/* Hero Section */}
