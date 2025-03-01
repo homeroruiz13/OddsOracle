@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Header from "../components/Header";
+// Remove the unused Header import
+// import Header from "../components/Header";
 
 const NBAPrizePicksDashboard = () => {
-  // States for various UI elements
-  const [activeTab, setActiveTab] = useState("home");
+  // Comment out unused state variables
+  // const [activeTab, setActiveTab] = useState("home");
   const [statFilter, setStatFilter] = useState("all");
 
   // Sample data for featured predictions
@@ -524,14 +525,14 @@ const NBAPrizePicksDashboard = () => {
   );
 };
 
-// Placeholder components for other tabs
-const Tools = () => <div>Tools & Resources Page</div>;
-const Community = () => <div>Community Picks Page</div>;
-const Blog = ({ articles }) => <div>Blog & Insights Page</div>;
-const Leaderboard = ({ topPredictors }) => <div>Leaderboard Page</div>;
-const MyPicks = () => <div>My Picks Dashboard</div>;
-const FAQ = () => <div>FAQ & Support Page</div>;
-const Predictions = () => <div>NBA Predictions Page</div>;
-const PlayerStats = () => <div>Player Stats & Analysis Page</div>;
+// Remove or comment out all the unused component declarations
+// const Tools = () => <div>Tools & Resources Page</div>;
+// const Community = () => <div>Community Picks Page</div>;
+// const Blog = ({ articles }) => <div>Blog & Insights Page</div>;
+// const Leaderboard = ({ topPredictors }) => <div>Leaderboard Page</div>;
+// const MyPicks = () => <div>My Picks Dashboard</div>;
+// const FAQ = () => <div>FAQ & Support Page</div>;
+// const Predictions = () => <div>NBA Predictions Page</div>;
+// const PlayerStats = () => <div>Player Stats & Analysis Page</div>;
 
 export default NBAPrizePicksDashboard;
