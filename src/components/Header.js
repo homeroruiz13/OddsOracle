@@ -6,7 +6,7 @@ import SignInForm from "./SignInForm"; // Import the SignInForm component
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
-  const { isLoggedIn, login, logout, user } = useContext(AuthContext);
+  const { isLoggedIn, logout, user } = useContext(AuthContext);
 
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
