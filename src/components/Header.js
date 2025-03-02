@@ -16,14 +16,6 @@ const Header = () => {
     setIsSignInModalOpen(false);
   };
 
-  const handleSignInSuccess = (formData) => {
-    // Call the login function from AuthContext
-    login(formData.email, formData.password);
-    
-    // Close the modal
-    closeSignInModal();
-  };
-
   return (
     <header className="bg-black text-white border-b border-gray-800">
       <div className="container mx-auto px-4 py-3">
@@ -77,7 +69,7 @@ const Header = () => {
                   My Picks
                 </Link>
                 <button 
-                  onClick={openSignInModal} // Changed to open modal instead of direct login
+                  onClick={openSignInModal} // Open custom modal instead of netlify popup
                   className="bg-purple-600 hover:bg-purple-700 transition-colors text-white px-4 py-2 rounded-md font-medium"
                 >
                   Sign In
@@ -185,7 +177,7 @@ const Header = () => {
           <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             {/* Background overlay */}
             <div 
-              className="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" 
+              className="fixed inset-0 bg-black bg-opacity-75 transition-opacity" 
               aria-hidden="true"
               onClick={closeSignInModal}
             ></div>
@@ -206,7 +198,7 @@ const Header = () => {
               </div>
               
               <div className="p-6">
-                <SignInForm customSubmitHandler={handleSignInSuccess} />
+                <SignInForm onClose={closeSignInModal} />
               </div>
             </div>
           </div>
