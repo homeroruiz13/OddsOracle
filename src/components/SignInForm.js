@@ -3,7 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import netlifyIdentity from 'netlify-identity-widget';
 
 const SignInForm = ({ customSubmitHandler, onClose }) => {
-  const { loginWithCredentials } = useContext(AuthContext);
+  // Remove unused loginWithCredentials
+  const { } = useContext(AuthContext);
   
   const [formData, setFormData] = useState({
     email: '',
@@ -171,13 +172,13 @@ const SignInForm = ({ customSubmitHandler, onClose }) => {
           </div>
           
           <div className="text-sm">
-            <a 
-              href="#" 
-              className="text-purple-400 hover:text-purple-300"
+            <button 
+              type="button"
+              className="text-purple-400 hover:text-purple-300 bg-transparent border-0 p-0"
               onClick={openResetPassword}
             >
               Forgot password?
-            </a>
+            </button>
           </div>
         </div>
         
@@ -202,13 +203,13 @@ const SignInForm = ({ customSubmitHandler, onClose }) => {
       
       <div className="mt-4 text-center">
         <span className="text-sm text-gray-400">Don't have an account? </span>
-        <a 
-          href="#" 
-          className="text-sm text-purple-400 hover:text-purple-300"
+        <button 
+          type="button"
+          className="text-sm text-purple-400 hover:text-purple-300 bg-transparent border-0 p-0"
           onClick={openSignup}
         >
           Sign up
-        </a>
+        </button>
       </div>
     </div>
   );
