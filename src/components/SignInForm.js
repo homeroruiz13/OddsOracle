@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import netlifyIdentity from 'netlify-identity-widget';
 
-const SignInForm = ({ customSubmitHandler }) => {
+const SignInForm = ({ customSubmitHandler, onClose }) => {
+  const { loginWithCredentials } = useContext(AuthContext);
+  
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -49,34 +53,59 @@ const SignInForm = ({ customSubmitHandler }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validateForm()) {
       setIsSubmitting(true);
       
-      // Simulate API call
-      setTimeout(() => {
-        // For demo purposes: email "test@example.com" with password "password123" works
-        if (formData.email === 'test@example.com' && formData.password === 'password123') {
-          setSignInStatus({
-            success: true,
-            message: 'Sign in successful!'
+      try {
+        // Use Netlify Identity login
+        await netlifyIdentity.login(formData.email, formData.password)
+          .then(() => {
+            setSignInStatus({
+              success: true,
+              message: 'Sign in successful!'
+            });
+            
+            // If customSubmitHandler is provided, call it with formData
+            if (customSubmitHandler) {
+              customSubmitHandler(formData);
+            }
+            
+            // Close modal after successful login
+            setTimeout(() => {
+              if (onClose) onClose();
+            }, 1000);
+          })
+          .catch(error => {
+            console.error("Login error:", error);
+            setSignInStatus({
+              success: false,
+              message: error.message || 'Invalid email or password. Please try again.'
+            });
           });
-          
-          // If customSubmitHandler is provided, call it with formData
-          if (customSubmitHandler) {
-            customSubmitHandler(formData);
-          }
-        } else {
-          setSignInStatus({
-            success: false,
-            message: 'Invalid email or password. Please try again.'
-          });
-        }
+      } catch (error) {
+        setSignInStatus({
+          success: false,
+          message: 'An error occurred. Please try again.'
+        });
+      } finally {
         setIsSubmitting(false);
-      }, 1000);
+      }
     }
+  };
+
+  const openSignup = (e) => {
+    e.preventDefault();
+    netlifyIdentity.open('signup');
+    if (onClose) onClose();
+  };
+
+  const openResetPassword = (e) => {
+    e.preventDefault();
+    netlifyIdentity.open('recovery');
+    if (onClose) onClose();
   };
 
   return (
@@ -142,7 +171,11 @@ const SignInForm = ({ customSubmitHandler }) => {
           </div>
           
           <div className="text-sm">
-            <a href="#" className="text-purple-400 hover:text-purple-300">
+            <a 
+              href="#" 
+              className="text-purple-400 hover:text-purple-300"
+              onClick={openResetPassword}
+            >
               Forgot password?
             </a>
           </div>
@@ -169,7 +202,11 @@ const SignInForm = ({ customSubmitHandler }) => {
       
       <div className="mt-4 text-center">
         <span className="text-sm text-gray-400">Don't have an account? </span>
-        <a href="#" className="text-sm text-purple-400 hover:text-purple-300">
+        <a 
+          href="#" 
+          className="text-sm text-purple-400 hover:text-purple-300"
+          onClick={openSignup}
+        >
           Sign up
         </a>
       </div>
