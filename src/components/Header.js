@@ -6,6 +6,7 @@ import SignInForm from "./SignInForm"; // Import the SignInForm component
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
+  // Remove 'login' from destructuring since it's not being used
   const { isLoggedIn, logout, user } = useContext(AuthContext);
 
   const openSignInModal = () => {
