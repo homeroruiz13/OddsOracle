@@ -3,8 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import netlifyIdentity from 'netlify-identity-widget';
 
 const SignInForm = ({ customSubmitHandler, onClose }) => {
-  // Remove unused loginWithCredentials
-  const { } = useContext(AuthContext);
+  // Remove empty destructuring that was causing the error
+  const authContext = useContext(AuthContext);
   
   const [formData, setFormData] = useState({
     email: '',
