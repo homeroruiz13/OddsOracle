@@ -23,7 +23,7 @@ const Header = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link to="/" className="text-2xl font-bold text-purple-500">
-              NBA PrizePicks Predictor
+              Odds Oracle
             </Link>
           </div>
 
