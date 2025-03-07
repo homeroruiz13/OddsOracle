@@ -59,37 +59,43 @@ const SignInForm = ({ customSubmitHandler, onClose }) => {
       setIsSubmitting(true);
       
       try {
-        // Use Netlify Identity login
-        await netlifyIdentity.login(formData.email, formData.password)
-          .then(() => {
-            setSignInStatus({
-              success: true,
-              message: 'Sign in successful!'
-            });
-            
-            // If customSubmitHandler is provided, call it with formData
-            if (customSubmitHandler) {
-              customSubmitHandler(formData);
-            }
-            
-            // Close modal after successful login
-            setTimeout(() => {
-              if (onClose) onClose();
-            }, 1000);
-          })
-          .catch(error => {
-            console.error("Login error:", error);
-            setSignInStatus({
-              success: false,
-              message: error.message || 'Invalid email or password. Please try again.'
-            });
+        // Open the Netlify Identity widget for login
+        netlifyIdentity.open('login');
+        
+        // Set up a listener for authentication events
+        const authListener = netlifyIdentity.on('login', user => {
+          setSignInStatus({
+            success: true,
+            message: 'Sign in successful!'
           });
+          
+          // If customSubmitHandler is provided, call it
+          if (customSubmitHandler) {
+            customSubmitHandler({ email: user.email });
+          }
+          
+          // Close modal after successful login
+          setTimeout(() => {
+            if (onClose) onClose();
+          }, 1000);
+          
+          // Clean up listener
+          netlifyIdentity.off('login', authListener);
+          setIsSubmitting(false);
+        });
+        
+        // Also listen for close events without login
+        const closeListener = netlifyIdentity.on('close', () => {
+          setIsSubmitting(false);
+          netlifyIdentity.off('close', closeListener);
+        });
+        
       } catch (error) {
+        console.error("Login error:", error);
         setSignInStatus({
           success: false,
           message: 'An error occurred. Please try again.'
         });
-      } finally {
         setIsSubmitting(false);
       }
     }
@@ -204,6 +210,18 @@ const SignInForm = ({ customSubmitHandler, onClose }) => {
               'Sign In'
             )}
           </button>
+          
+          <div className="text-center mt-4">
+            <span className="text-xs text-gray-500">or</span>
+          </div>
+          
+          <button
+            type="button"
+            onClick={() => netlifyIdentity.open('login')}
+            className="w-full mt-4 py-2 px-6 rounded-lg font-medium text-purple-300 border border-purple-600 hover:bg-purple-900 transition-colors"
+          >
+            Sign In with Netlify Identity
+          </button>
         </form>
         
         <div className="mt-6 text-center">
@@ -218,7 +236,7 @@ const SignInForm = ({ customSubmitHandler, onClose }) => {
         </div>
 
         <div className="mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
-          © 2025 NBA PrizePicks Predictor. All rights reserved.
+          © 2025 Odds Oracle. All rights reserved.
         </div>
       </div>
     </div>
