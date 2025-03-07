@@ -1,1106 +1,676 @@
 import React, { useState } from "react";
 
-const PlayerStats = () => {
-  const [statCategory, setStatCategory] = useState("scoring");
-  const [timeFrame, setTimeFrame] = useState("season");
-  const [teamFilter, setTeamFilter] = useState("all");
-  const [teamStatView, setTeamStatView] = useState("offense");
-
-  // Sample data for player stats
-  const playerStatsData = [
-    {
-      id: 1,
-      player: "Joel Embiid",
-      team: "PHI",
-      position: "C",
-      gamesPlayed: 42,
-      ppg: 33.8,
-      rpg: 11.2,
-      apg: 5.6,
-      spg: 1.1,
-      bpg: 1.7,
-      tpg: 3.9,
-      mpg: 34.5,
-      fgp: 52.9,
-      tpp: 37.8,
-      ftp: 88.5,
-      overRate: 72,
-      underRate: 28,
-      propSuccessRate: 68,
-    },
-    {
-      id: 2,
-      player: "Nikola Jokić",
-      team: "DEN",
-      position: "C",
-      gamesPlayed: 64,
-      ppg: 26.4,
-      rpg: 12.5,
-      apg: 9.2,
-      spg: 1.3,
-      bpg: 0.9,
-      tpg: 3.1,
-      mpg: 34.8,
-      fgp: 58.4,
-      tpp: 35.9,
-      ftp: 82.1,
-      overRate: 68,
-      underRate: 32,
-      propSuccessRate: 76,
-    },
-    {
-      id: 3,
-      player: "Giannis Antetokounmpo",
-      team: "MIL",
-      position: "PF",
-      gamesPlayed: 61,
-      ppg: 30.4,
-      rpg: 11.5,
-      apg: 6.5,
-      spg: 1.2,
-      bpg: 1.1,
-      tpg: 3.5,
-      mpg: 34.2,
-      fgp: 61.1,
-      tpp: 28.6,
-      ftp: 65.7,
-      overRate: 64,
-      underRate: 36,
-      propSuccessRate: 63,
-    },
-    {
-      id: 4,
-      player: "Shai Gilgeous-Alexander",
-      team: "OKC",
-      position: "PG",
-      gamesPlayed: 68,
-      ppg: 31.0,
-      rpg: 5.5,
-      apg: 6.8,
-      spg: 2.1,
-      bpg: 0.9,
-      tpg: 2.4,
-      mpg: 33.8,
-      fgp: 53.7,
-      tpp: 36.2,
-      ftp: 90.4,
-      overRate: 71,
-      underRate: 29,
-      propSuccessRate: 65,
-    },
-    {
-      id: 5,
-      player: "Luka Dončić",
-      team: "DAL",
-      position: "PG",
-      gamesPlayed: 62,
-      ppg: 32.8,
-      rpg: 8.8,
-      apg: 9.1,
-      spg: 1.5,
-      bpg: 0.5,
-      tpg: 3.9,
-      mpg: 36.6,
-      fgp: 48.7,
-      tpp: 38.2,
-      ftp: 78.5,
-      overRate: 69,
-      underRate: 31,
-      propSuccessRate: 66,
-    },
-    {
-      id: 6,
-      player: "Anthony Edwards",
-      team: "MIN",
-      position: "SG",
-      gamesPlayed: 70,
-      ppg: 27.4,
-      rpg: 5.5,
-      apg: 5.1,
-      spg: 1.4,
-      bpg: 0.5,
-      tpg: 2.9,
-      mpg: 35.7,
-      fgp: 46.5,
-      tpp: 37.8,
-      ftp: 83.2,
-      overRate: 62,
-      underRate: 38,
-      propSuccessRate: 61,
-    },
-    {
-      id: 7,
-      player: "Jayson Tatum",
-      team: "BOS",
-      position: "SF",
-      gamesPlayed: 68,
-      ppg: 28.1,
-      rpg: 8.2,
-      apg: 4.8,
-      spg: 1.0,
-      bpg: 0.6,
-      tpg: 2.6,
-      mpg: 35.9,
-      fgp: 47.3,
-      tpp: 37.2,
-      ftp: 82.5,
-      overRate: 58,
-      underRate: 42,
-      propSuccessRate: 59,
-    },
-    {
-      id: 8,
-      player: "LeBron James",
-      team: "LAL",
-      position: "SF",
-      gamesPlayed: 63,
-      ppg: 25.9,
-      rpg: 7.3,
-      apg: 8.6,
-      spg: 1.2,
-      bpg: 0.5,
-      tpg: 3.4,
-      mpg: 35.3,
-      fgp: 54.1,
-      tpp: 39.9,
-      ftp: 75.4,
-      overRate: 65,
-      underRate: 35,
-      propSuccessRate: 67,
-    },
-    {
-      id: 9,
-      player: "Kevin Durant",
-      team: "PHX",
-      position: "SF",
-      gamesPlayed: 60,
-      ppg: 27.2,
-      rpg: 6.8,
-      apg: 5.0,
-      spg: 0.9,
-      bpg: 1.2,
-      tpg: 2.3,
-      mpg: 36.2,
-      fgp: 52.9,
-      tpp: 41.2,
-      ftp: 86.4,
-      overRate: 67,
-      underRate: 33,
-      propSuccessRate: 70,
-    },
-    {
-      id: 10,
-      player: "Stephen Curry",
-      team: "GSW",
-      position: "PG",
-      gamesPlayed: 58,
-      ppg: 26.8,
-      rpg: 4.5,
-      apg: 5.1,
-      spg: 0.7,
-      bpg: 0.4,
-      tpg: 2.8,
-      mpg: 33.1,
-      fgp: 45.2,
-      tpp: 40.8,
-      ftp: 92.3,
-      overRate: 63,
-      underRate: 37,
-      propSuccessRate: 64,
-    },
-    {
-      id: 11,
-      player: "Devin Booker",
-      team: "PHX",
-      position: "SG",
-      gamesPlayed: 64,
-      ppg: 27.1,
-      rpg: 4.6,
-      apg: 6.9,
-      spg: 1.0,
-      bpg: 0.4,
-      tpg: 2.7,
-      mpg: 36.5,
-      fgp: 49.8,
-      tpp: 38.3,
-      ftp: 87.9,
-      overRate: 60,
-      underRate: 40,
-      propSuccessRate: 62,
-    },
-    {
-      id: 12,
-      player: "Jalen Brunson",
-      team: "NYK",
-      position: "PG",
-      gamesPlayed: 69,
-      ppg: 28.7,
-      rpg: 3.6,
-      apg: 6.7,
-      spg: 0.9,
-      bpg: 0.2,
-      tpg: 2.4,
-      mpg: 35.2,
-      fgp: 47.8,
-      tpp: 40.1,
-      ftp: 84.2,
-      overRate: 66,
-      underRate: 34,
-      propSuccessRate: 69,
-    },
-    {
-      id: 13,
-      player: "Damian Lillard",
-      team: "MIL",
-      position: "PG",
-      gamesPlayed: 60,
-      ppg: 24.5,
-      rpg: 4.4,
-      apg: 7.0,
-      spg: 1.0,
-      bpg: 0.3,
-      tpg: 2.6,
-      mpg: 34.8,
-      fgp: 42.9,
-      tpp: 37.1,
-      ftp: 91.5,
-      overRate: 61,
-      underRate: 39,
-      propSuccessRate: 60,
-    },
-    {
-      id: 14,
-      player: "Tyrese Haliburton",
-      team: "IND",
-      position: "PG",
-      gamesPlayed: 58,
-      ppg: 20.8,
-      rpg: 3.9,
-      apg: 10.9,
-      spg: 1.2,
-      bpg: 0.6,
-      tpg: 2.3,
-      mpg: 32.9,
-      fgp: 47.3,
-      tpp: 36.8,
-      ftp: 85.7,
-      overRate: 72,
-      underRate: 28,
-      propSuccessRate: 74,
-    },
-    {
-      id: 15,
-      player: "Anthony Davis",
-      team: "LAL",
-      position: "PF",
-      gamesPlayed: 65,
-      ppg: 24.7,
-      rpg: 12.6,
-      apg: 3.4,
-      spg: 1.2,
-      bpg: 2.3,
-      tpg: 2.1,
-      mpg: 35.4,
-      fgp: 55.6,
-      tpp: 28.4,
-      ftp: 81.3,
-      overRate: 59,
-      underRate: 41,
-      propSuccessRate: 63,
-    },
-  ];
-
-  // Sample data for team offensive stats
+const NBAStatsPage = () => {
+  // State for active tab and sorting
+  const [activeTab, setActiveTab] = useState("players");
+  const [playerStatSort, setPlayerStatSort] = useState("points");
+  const [teamStatSort, setTeamStatSort] = useState("ppg");
+  
+  // Sample team data for offensive stats
   const teamOffenseStats = [
     {
       id: 1,
-      team: "Boston Celtics",
+      name: "Boston Celtics",
       abbreviation: "BOS",
-      record: "52-14",
-      ppg: 120.8,
-      fgp: 48.9,
-      tpp: 38.5,
-      apg: 26.8,
-      pace: 99.2,
-      ortg: 122.5,
-      overHitRate: 65,
-      ptsOverLastTen: 7,
+      record: "41-12",
+      ppg: 123.8,
+      fgPct: 48.2,
+      threePtPct: 38.5,
+      ftPct: 82.1,
+      assists: 26.8,
+      pace: 101.2,
+      offRtg: 118.3,
     },
     {
       id: 2,
-      team: "Indiana Pacers",
+      name: "Indiana Pacers",
       abbreviation: "IND",
-      record: "37-29",
-      ppg: 119.5,
-      fgp: 50.2,
-      tpp: 37.2,
-      apg: 30.1,
-      pace: 102.3,
-      ortg: 119.7,
-      overHitRate: 68,
-      ptsOverLastTen: 8,
+      record: "33-25",
+      ppg: 123.6,
+      fgPct: 50.1,
+      threePtPct: 37.2,
+      ftPct: 78.3,
+      assists: 31.2,
+      pace: 104.5,
+      offRtg: 117.2,
     },
     {
       id: 3,
-      team: "Milwaukee Bucks",
-      abbreviation: "MIL",
-      record: "41-25",
-      ppg: 119.3,
-      fgp: 49.1,
-      tpp: 37.5,
-      apg: 25.7,
-      pace: 98.7,
-      ortg: 118.9,
-      overHitRate: 61,
-      ptsOverLastTen: 6,
+      name: "Sacramento Kings",
+      abbreviation: "SAC",
+      record: "33-23",
+      ppg: 118.2,
+      fgPct: 47.6,
+      threePtPct: 36.8,
+      ftPct: 79.5,
+      assists: 28.9,
+      pace: 102.8,
+      offRtg: 116.5,
     },
     {
       id: 4,
-      team: "Oklahoma City Thunder",
-      abbreviation: "OKC",
-      record: "45-20",
-      ppg: 118.7,
-      fgp: 49.8,
-      tpp: 38.7,
-      apg: 26.9,
-      pace: 100.1,
-      ortg: 119.2,
-      overHitRate: 63,
-      ptsOverLastTen: 7,
+      name: "Milwaukee Bucks",
+      abbreviation: "MIL",
+      record: "35-21",
+      ppg: 118.1,
+      fgPct: 48.7,
+      threePtPct: 37.8,
+      ftPct: 81.3,
+      assists: 25.7,
+      pace: 99.8,
+      offRtg: 116.1,
     },
     {
       id: 5,
-      team: "Dallas Mavericks",
-      abbreviation: "DAL",
-      record: "38-28",
-      ppg: 118.3,
-      fgp: 47.8,
-      tpp: 36.9,
-      apg: 24.8,
-      pace: 97.9,
-      ortg: 118.6,
-      overHitRate: 59,
-      ptsOverLastTen: 6,
+      name: "Oklahoma City Thunder",
+      abbreviation: "OKC",
+      record: "37-17",
+      ppg: 117.9,
+      fgPct: 49.3,
+      threePtPct: 38.1,
+      ftPct: 80.2,
+      assists: 26.1,
+      pace: 100.7,
+      offRtg: 115.9,
     },
     {
       id: 6,
-      team: "Sacramento Kings",
-      abbreviation: "SAC",
-      record: "37-28",
-      ppg: 118.2,
-      fgp: 48.3,
-      tpp: 36.8,
-      apg: 27.8,
-      pace: 100.5,
-      ortg: 118.1,
-      overHitRate: 64,
-      ptsOverLastTen: 7,
-    },
-    {
-      id: 7,
-      team: "Cleveland Cavaliers",
-      abbreviation: "CLE",
-      record: "42-24",
-      ppg: 117.9,
-      fgp: 49.2,
-      tpp: 37.1,
-      apg: 26.3,
-      pace: 97.2,
-      ortg: 118.8,
-      overHitRate: 60,
-      ptsOverLastTen: 6,
-    },
-    {
-      id: 8,
-      team: "Denver Nuggets",
-      abbreviation: "DEN",
-      record: "46-20",
-      ppg: 117.5,
-      fgp: 49.5,
-      tpp: 37.7,
-      apg: 29.3,
-      pace: 97.8,
-      ortg: 118.5,
-      overHitRate: 57,
-      ptsOverLastTen: 5,
-    },
-    {
-      id: 9,
-      team: "Phoenix Suns",
-      abbreviation: "PHX",
-      record: "38-28",
-      ppg: 117.2,
-      fgp: 48.7,
-      tpp: 38.2,
-      apg: 27.1,
-      pace: 99.3,
-      ortg: 117.9,
-      overHitRate: 58,
-      ptsOverLastTen: 6,
-    },
-    {
-      id: 10,
-      team: "Atlanta Hawks",
+      name: "Atlanta Hawks",
       abbreviation: "ATL",
-      record: "30-36",
-      ppg: 117.1,
-      fgp: 46.9,
-      tpp: 36.4,
-      apg: 25.2,
-      pace: 101.8,
-      ortg: 116.5,
-      overHitRate: 61,
-      ptsOverLastTen: 6,
-    },
+      record: "24-31",
+      ppg: 117.8,
+      fgPct: 46.5,
+      threePtPct: 36.7,
+      ftPct: 83.1,
+      assists: 25.3,
+      pace: 103.1,
+      offRtg: 115.7,
+    }
   ];
 
-  // Sample data for team defensive stats
+  // Sample team data for defensive stats
   const teamDefenseStats = [
     {
       id: 1,
-      team: "Minnesota Timberwolves",
+      name: "Minnesota Timberwolves",
       abbreviation: "MIN",
-      record: "45-21",
-      oppPpg: 106.4,
-      oppFgp: 44.5,
-      oppTpp: 34.1,
-      stl: 8.3,
-      blk: 6.2,
-      drtg: 108.3,
-      underHitRate: 69,
-      ptsUnderLastTen: 8,
+      record: "37-16",
+      oppPpg: 105.8,
+      oppFgPct: 44.1,
+      oppThreePtPct: 34.2,
+      steals: 8.1,
+      blocks: 6.3,
+      defRtg: 107.6,
+      oppTov: 13.8,
     },
     {
       id: 2,
-      team: "Boston Celtics",
-      abbreviation: "BOS",
-      record: "52-14",
-      oppPpg: 108.1,
-      oppFgp: 45.2,
-      oppTpp: 34.9,
-      stl: 7.2,
-      blk: 5.7,
-      drtg: 110.1,
-      underHitRate: 65,
-      ptsUnderLastTen: 7,
+      name: "Cleveland Cavaliers",
+      abbreviation: "CLE",
+      record: "36-16",
+      oppPpg: 107.6,
+      oppFgPct: 45.2,
+      oppThreePtPct: 34.8,
+      steals: 7.2,
+      blocks: 5.1,
+      defRtg: 109.3,
+      oppTov: 13.2,
     },
     {
       id: 3,
-      team: "Cleveland Cavaliers",
-      abbreviation: "CLE",
-      record: "42-24",
-      oppPpg: 109.8,
-      oppFgp: 46.1,
-      oppTpp: 35.2,
-      stl: 7.5,
-      blk: 4.9,
-      drtg: 110.8,
-      underHitRate: 62,
-      ptsUnderLastTen: 6,
+      name: "Boston Celtics",
+      abbreviation: "BOS",
+      record: "41-12",
+      oppPpg: 108.2,
+      oppFgPct: 45.7,
+      oppThreePtPct: 35.6,
+      steals: 7.8,
+      blocks: 5.8,
+      defRtg: 110.2,
+      oppTov: 13.5,
     },
     {
       id: 4,
-      team: "Oklahoma City Thunder",
-      abbreviation: "OKC",
-      record: "45-20",
-      oppPpg: 110.2,
-      oppFgp: 45.8,
-      oppTpp: 35.7,
-      stl: 8.2,
-      blk: 5.4,
-      drtg: 111.5,
-      underHitRate: 61,
-      ptsUnderLastTen: 6,
+      name: "Orlando Magic",
+      abbreviation: "ORL",
+      record: "30-25",
+      oppPpg: 108.5,
+      oppFgPct: 46.3,
+      oppThreePtPct: 35.4,
+      steals: 7.4,
+      blocks: 5.4,
+      defRtg: 110.7,
+      oppTov: 14.1,
     },
     {
       id: 5,
-      team: "Orlando Magic",
-      abbreviation: "ORL",
-      record: "36-30",
-      oppPpg: 110.3,
-      oppFgp: 46.5,
-      oppTpp: 35.9,
-      stl: 7.1,
-      blk: 5.1,
-      drtg: 111.7,
-      underHitRate: 60,
-      ptsUnderLastTen: 6,
+      name: "Oklahoma City Thunder",
+      abbreviation: "OKC",
+      record: "37-17",
+      oppPpg: 109.3,
+      oppFgPct: 45.9,
+      oppThreePtPct: 36.2,
+      steals: 8.6,
+      blocks: 5.6,
+      defRtg: 111.2,
+      oppTov: 14.6,
     },
     {
       id: 6,
-      team: "Denver Nuggets",
-      abbreviation: "DEN",
-      record: "46-20",
-      oppPpg: 110.6,
-      oppFgp: 46.8,
-      oppTpp: 36.3,
-      stl: 7.4,
-      blk: 4.3,
-      drtg: 112.4,
-      underHitRate: 57,
-      ptsUnderLastTen: 5,
-    },
-    {
-      id: 7,
-      team: "Miami Heat",
-      abbreviation: "MIA",
-      record: "35-30",
-      oppPpg: 110.8,
-      oppFgp: 47.0,
-      oppTpp: 36.8,
-      stl: 7.6,
-      blk: 4.1,
-      drtg: 112.6,
-      underHitRate: 59,
-      ptsUnderLastTen: 6,
-    },
-    {
-      id: 8,
-      team: "New York Knicks",
+      name: "New York Knicks",
       abbreviation: "NYK",
-      record: "38-27",
-      oppPpg: 111.0,
-      oppFgp: 45.9,
-      oppTpp: 35.6,
-      stl: 6.8,
-      blk: 4.5,
-      drtg: 113.1,
-      underHitRate: 56,
-      ptsUnderLastTen: 6,
-    },
-    {
-      id: 9,
-      team: "Los Angeles Clippers",
-      abbreviation: "LAC",
-      record: "41-25",
-      oppPpg: 111.4,
-      oppFgp: 47.2,
-      oppTpp: 36.5,
-      stl: 7.1,
-      blk: 5.0,
-      drtg: 113.6,
-      underHitRate: 55,
-      ptsUnderLastTen: 5,
-    },
-    {
-      id: 10,
-      team: "Philadelphia 76ers",
-      abbreviation: "PHI",
-      record: "36-30",
-      oppPpg: 111.7,
-      oppFgp: 47.5,
-      oppTpp: 36.7,
-      stl: 7.2,
-      blk: 5.2,
-      drtg: 113.8,
-      underHitRate: 54,
-      ptsUnderLastTen: 5,
-    },
+      record: "33-22",
+      oppPpg: 109.6,
+      oppFgPct: 46.7,
+      oppThreePtPct: 36.5,
+      steals: 6.8,
+      blocks: 4.9,
+      defRtg: 111.5,
+      oppTov: 12.9,
+    }
   ];
 
-  // Stats filter categories
-  const statCategories = [
-    { id: "scoring", label: "Scoring" },
+  // Tabs for the stats page
+  const tabs = [
+    { id: "players", label: "Player Stats" },
+    { id: "teams", label: "Team Stats" },
+  ];
+
+  // Player stat filters
+  const playerStatFilters = [
+    { id: "points", label: "Points" },
     { id: "rebounds", label: "Rebounds" },
     { id: "assists", label: "Assists" },
-    { id: "fantasy", label: "Fantasy" },
-    { id: "prop-success", label: "Prop Success" },
+    { id: "steals", label: "Steals" },
+    { id: "blocks", label: "Blocks" },
+    { id: "threePtMade", label: "3PT Made" },
+    { id: "fantasy", label: "Fantasy Pts" },
   ];
 
-  // Time frame filters
-  const timeFrameFilters = [
-    { id: "season", label: "Season" },
-    { id: "last-10", label: "Last 10" },
-    { id: "last-5", label: "Last 5" },
-    { id: "home", label: "Home" },
-    { id: "away", label: "Away" },
+  // Team stat filters
+  const teamStatFilters = [
+    { id: "ppg", label: "Points" },
+    { id: "assists", label: "Assists" },
+    { id: "fgPct", label: "FG%" },
+    { id: "threePtPct", label: "3PT%" },
+    { id: "pace", label: "Pace" },
+    { id: "offRtg", label: "Off Rtg" },
   ];
 
-  // Team filters
-  const teams = [
-    { id: "all", name: "All Teams" },
-    { id: "BOS", name: "Boston Celtics" },
-    { id: "DEN", name: "Denver Nuggets" },
-    { id: "GSW", name: "Golden State Warriors" },
-    { id: "LAL", name: "Los Angeles Lakers" },
-    { id: "MIL", name: "Milwaukee Bucks" },
-    { id: "NYK", name: "New York Knicks" },
-    { id: "OKC", name: "Oklahoma City Thunder" },
-    { id: "PHI", name: "Philadelphia 76ers" },
-    { id: "PHX", name: "Phoenix Suns" },
+  // Team defense filters
+  const teamDefenseFilters = [
+    { id: "oppPpg", label: "Opp Points" },
+    { id: "oppFgPct", label: "Opp FG%" },
+    { id: "steals", label: "Steals" },
+    { id: "blocks", label: "Blocks" },
+    { id: "defRtg", label: "Def Rtg" },
+    { id: "oppTov", label: "Opp Turnovers" },
   ];
-
-  // Function to render the player stats based on selected category
-  const renderPlayerStatsTable = () => {
-    // Sort players based on the selected stat category
-    let sortedPlayers = [...playerStatsData];
-    
-    if (statCategory === "scoring") {
-      sortedPlayers = sortedPlayers.sort((a, b) => b.ppg - a.ppg);
-    } else if (statCategory === "rebounds") {
-      sortedPlayers = sortedPlayers.sort((a, b) => b.rpg - a.rpg);
-    } else if (statCategory === "assists") {
-      sortedPlayers = sortedPlayers.sort((a, b) => b.apg - a.apg);
-    } else if (statCategory === "fantasy") {
-      // Fantasy points calculation (simple version: pts + 1.2*reb + 1.5*ast + 3*stl + 3*blk - 1*to)
-      sortedPlayers = sortedPlayers.sort((a, b) => {
-        const aFantasy = a.ppg + 1.2*a.rpg + 1.5*a.apg + 3*a.spg + 3*a.bpg - a.tpg;
-        const bFantasy = b.ppg + 1.2*b.rpg + 1.5*b.apg + 3*b.spg + 3*b.bpg - b.tpg;
-        return bFantasy - aFantasy;
-      });
-    } else if (statCategory === "prop-success") {
-      sortedPlayers = sortedPlayers.sort((a, b) => b.propSuccessRate - a.propSuccessRate);
-    }
-    
-    // Filter by team if needed
-    if (teamFilter !== "all") {
-      sortedPlayers = sortedPlayers.filter(player => player.team === teamFilter);
-    }
-
-    return (
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-800 border-b border-gray-700">
-            <tr>
-              <th className="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Rank</th>
-              <th className="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Player</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Team</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Pos</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">GP</th>
-              {statCategory === "scoring" && (
-                <>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">PPG</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">FG%</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">3P%</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">FT%</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">PTS OVER%</th>
-                </>
-              )}
-              {statCategory === "rebounds" && (
-                <>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">RPG</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">MPG</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">REB OVER%</th>
-                </>
-              )}
-              {statCategory === "assists" && (
-                <>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">APG</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">AST/TO</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">AST OVER%</th>
-                </>
-              )}
-              {statCategory === "fantasy" && (
-                <>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">PTS</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">REB</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">AST</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">STL</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">BLK</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">TO</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">FPTS</th>
-                </>
-              )}
-              {statCategory === "prop-success" && (
-                <>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Prop Success</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">OVER Rate</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">UNDER Rate</th>
-                </>
-              )}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-800">
-            {sortedPlayers.map((player, index) => (
-              <tr key={player.id} className="bg-gray-900 hover:bg-gray-800 transition-colors">
-                <td className="py-4 px-4 font-medium text-gray-300">{index + 1}</td>
-                <td className="py-4 px-4">
-                  <div className="flex items-center">
-                    <div className="h-8 w-8 bg-purple-600 rounded-full mr-2 flex items-center justify-center font-bold text-white">
-                      {player.player.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="font-medium text-white">{player.player}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="py-4 px-4 text-center text-gray-300">{player.team}</td>
-                <td className="py-4 px-4 text-center text-gray-300">{player.position}</td>
-                <td className="py-4 px-4 text-center text-gray-300">{player.gamesPlayed}</td>
-                
-                {statCategory === "scoring" && (
-                  <>
-                    <td className="py-4 px-4 text-center font-medium text-white">{player.ppg}</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.fgp}%</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.tpp}%</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.ftp}%</td>
-                    <td className="py-4 px-4 text-center">
-                      <span className={`font-medium ${
-                        player.overRate >= 70 ? "text-green-400" : 
-                        player.overRate >= 50 ? "text-yellow-400" : "text-red-400"
-                      }`}>
-                        {player.overRate}%</span>
-                    </td>
-                  </>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">NBA Analytics Dashboard</h1>
-        
-        {/* Main content tabs */}
-        <div className="flex mb-8 border-b border-gray-700">
-          <button
-            className={`px-4 py-2 font-medium ${
-              teamFilter === "all" ? "text-purple-400 border-b-2 border-purple-400" : "text-gray-400 hover:text-white"
-            }`}
-            onClick={() => setTeamFilter("all")}
-          >
-            All Players
-          </button>
-          <button
-            className={`px-4 py-2 font-medium ${
-              teamStatView === "offense" && teamFilter !== "all" ? "text-purple-400 border-b-2 border-purple-400" : "text-gray-400 hover:text-white"
-            }`}
-            onClick={() => {setTeamStatView("offense"); setTeamFilter("team");}}
-          >
-            Team Offense
-          </button>
-          <button
-            className={`px-4 py-2 font-medium ${
-              teamStatView === "defense" ? "text-purple-400 border-b-2 border-purple-400" : "text-gray-400 hover:text-white"
-            }`}
-            onClick={() => {setTeamStatView("defense"); setTeamFilter("team");}}
-          >
-            Team Defense
-          </button>
+    <div className="min-h-screen bg-black text-white">
+      {/* Header/Navigation */}
+      {/* Header component will be imported separately */}
+
+      {/* Main Stats Content */}
+      <main className="container mx-auto px-4 py-6">
+        {/* Hero Section */}
+        <div className="bg-gradient-to-r from-purple-900 to-indigo-900 rounded-lg overflow-hidden mb-8">
+          <div className="relative py-8 px-6 md:py-10 md:px-8">            
+            <div className="relative z-10 md:w-2/3">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3 text-white">
+                NBA Stats & Leaderboards
+              </h2>
+              <div className="h-1 w-20 bg-purple-500 rounded mb-5"></div>
+              <p className="text-xl text-purple-200 font-medium mb-4">
+                Track the league's top performers and team statistics
+              </p>
+              <p className="text-purple-200 mb-6 max-w-xl">
+                Comprehensive NBA statistics, updated daily to give you the latest player and team performance metrics.
+              </p>
+            </div>
+          </div>
+          
+          {/* Stats Bar */}
+          <div className="bg-purple-800 py-3 px-4 md:px-8 flex flex-wrap justify-between items-center text-purple-200 text-sm">
+            <div className="flex items-center">
+              <span className="font-medium">NBA Season:</span>
+              <span className="ml-2">2024-25</span>
+            </div>
+            <div className="flex items-center">
+              <span className="font-medium">Total Players:</span>
+              <span className="ml-2">450+</span>
+            </div>
+            <div className="flex items-center">
+              <span className="font-medium">Teams:</span>
+              <span className="ml-2">30</span>
+            </div>
+            <div className="flex items-center">
+              <span className="font-medium">Last Updated:</span>
+              <span className="ml-2">March 6, 2025</span>
+            </div>
+          </div>
         </div>
-        
-        {/* Filters */}
-        <div className="bg-gray-800 p-4 rounded-lg mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Only show stat categories filter for player stats */}
-            {teamFilter === "all" && (
-              <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">Stat Category</label>
-                <div className="flex flex-wrap gap-2">
-                  {statCategories.map((category) => (
-                    <button
-                      key={category.id}
-                      className={`px-3 py-1 text-sm rounded-full ${
-                        statCategory === category.id
-                          ? "bg-purple-600 text-white"
-                          : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                      }`}
-                      onClick={() => setStatCategory(category.id)}
-                    >
-                      {category.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {/* Time frame filters */}
+
+        {/* Tabs Navigation */}
+        <div className="bg-gray-900 rounded-lg border border-gray-800 p-4 mb-8">
+          <div className="flex border-b border-gray-800 mb-4">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                className={`px-6 py-3 font-medium ${
+                  activeTab === tab.id
+                    ? "text-purple-400 border-b-2 border-purple-500"
+                    : "text-gray-400 hover:text-purple-200"
+                }`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Player Stats Content */}
+          {activeTab === "players" && (
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-2">Time Frame</label>
-              <div className="flex flex-wrap gap-2">
-                {timeFrameFilters.map((filter) => (
+              <h3 className="text-lg font-semibold mb-4 text-purple-200">Player Stats Leaderboard</h3>
+              
+              <div className="flex flex-wrap gap-2 mb-4">
+                {playerStatFilters.map((filter) => (
                   <button
                     key={filter.id}
-                    className={`px-3 py-1 text-sm rounded-full ${
-                      timeFrame === filter.id
+                    className={`px-4 py-2 rounded-md ${
+                      playerStatSort === filter.id
                         ? "bg-purple-600 text-white"
-                        : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                        : "bg-gray-800 hover:bg-gray-700 text-gray-300"
                     }`}
-                    onClick={() => setTimeFrame(filter.id)}
+                    onClick={() => setPlayerStatSort(filter.id)}
                   >
                     {filter.label}
                   </button>
                 ))}
               </div>
-            </div>
-            
-            {/* Team filters - only show for player stats */}
-            {teamFilter === "all" && (
-              <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">Team</label>
-                <select
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 text-white"
-                  value={teamFilter}
-                  onChange={(e) => setTeamFilter(e.target.value)}
-                >
-                  {teams.map((team) => (
-                    <option key={team.id} value={team.id}>
-                      {team.name}
-                    </option>
-                  ))}
-                </select>
+
+              {/* Player Stats Table - Just the framework without data */}
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead className="bg-gray-800">
+                    <tr>
+                      <th className="p-3 text-left text-gray-300 font-semibold">Rank</th>
+                      <th className="p-3 text-left text-gray-300 font-semibold">Player</th>
+                      <th className="p-3 text-left text-gray-300 font-semibold">Team</th>
+                      <th className="p-3 text-left text-gray-300 font-semibold">Pos</th>
+                      <th className="p-3 text-right text-gray-300 font-semibold">
+                        {playerStatFilters.find(f => f.id === playerStatSort)?.label || "Points"}
+                      </th>
+                      <th className="p-3 text-right text-gray-300 font-semibold">GP</th>
+                      <th className="p-3 text-right text-gray-300 font-semibold">Min</th>
+                      <th className="p-3 text-right text-gray-300 font-semibold">Trend</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-800">
+                    {/* Will be populated with player data later */}
+                    <tr className="bg-gray-900 hover:bg-gray-800">
+                      <td className="p-3" colSpan="8">
+                        <div className="text-center text-gray-400 py-4">
+                          Player data will be added later
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            )}
-            
-            {/* Team offense/defense toggle - only show for team stats */}
-            {teamFilter !== "all" && (
-              <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">Team View</label>
-                <div className="flex">
-                  <button
-                    className={`px-4 py-2 text-sm rounded-l-md ${
-                      teamStatView === "offense"
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                    }`}
-                    onClick={() => setTeamStatView("offense")}
-                  >
-                    Offense
-                  </button>
-                  <button
-                    className={`px-4 py-2 text-sm rounded-r-md ${
-                      teamStatView === "defense"
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                    }`}
-                    onClick={() => setTeamStatView("defense")}
-                  >
-                    Defense
-                  </button>
+            </div>
+          )}
+
+          {/* Team Stats Content */}
+          {activeTab === "teams" && (
+            <div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Team Offense Stats */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 text-purple-200">Team Offense Rankings</h3>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {teamStatFilters.map((filter) => (
+                      <button
+                        key={filter.id}
+                        className={`px-3 py-1 text-sm rounded-md ${
+                          teamStatSort === filter.id
+                            ? "bg-purple-600 text-white"
+                            : "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                        }`}
+                        onClick={() => setTeamStatSort(filter.id)}
+                      >
+                        {filter.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Team Offense Stats Table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead className="bg-gray-800">
+                        <tr>
+                          <th className="p-2 text-left text-gray-300 font-semibold text-sm">Rank</th>
+                          <th className="p-2 text-left text-gray-300 font-semibold text-sm">Team</th>
+                          <th className="p-2 text-right text-gray-300 font-semibold text-sm">PPG</th>
+                          <th className="p-2 text-right text-gray-300 font-semibold text-sm">FG%</th>
+                          <th className="p-2 text-right text-gray-300 font-semibold text-sm">3PT%</th>
+                          <th className="p-2 text-right text-gray-300 font-semibold text-sm">AST</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-800">
+                        {teamOffenseStats
+                          .sort((a, b) => b[teamStatSort] - a[teamStatSort])
+                          .map((team, index) => (
+                            <tr key={team.id} className="bg-gray-900 hover:bg-gray-800">
+                              <td className="p-2 text-sm">{index + 1}</td>
+                              <td className="p-2">
+                                <div className="flex items-center">
+                                  <div className="h-6 w-6 bg-purple-600 rounded-full mr-2 flex items-center justify-center font-bold text-xs">
+                                    {team.abbreviation.charAt(0)}
+                                  </div>
+                                  <span className="font-medium text-sm">{team.name}</span>
+                                </div>
+                              </td>
+                              <td className={`p-2 text-right text-sm ${teamStatSort === 'ppg' ? 'text-purple-400 font-bold' : 'text-gray-300'}`}>
+                                {team.ppg.toFixed(1)}
+                              </td>
+                              <td className={`p-2 text-right text-sm ${teamStatSort === 'fgPct' ? 'text-purple-400 font-bold' : 'text-gray-300'}`}>
+                                {team.fgPct.toFixed(1)}%
+                              </td>
+                              <td className={`p-2 text-right text-sm ${teamStatSort === 'threePtPct' ? 'text-purple-400 font-bold' : 'text-gray-300'}`}>
+                                {team.threePtPct.toFixed(1)}%
+                              </td>
+                              <td className={`p-2 text-right text-sm ${teamStatSort === 'assists' ? 'text-purple-400 font-bold' : 'text-gray-300'}`}>
+                                {team.assists.toFixed(1)}
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Team Defense Stats */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 text-purple-200">Team Defense Rankings</h3>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {teamDefenseFilters.map((filter) => (
+                      <button
+                        key={filter.id}
+                        className={`px-3 py-1 text-sm rounded-md ${
+                          teamStatSort === filter.id
+                            ? "bg-purple-600 text-white"
+                            : "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                        }`}
+                        onClick={() => setTeamStatSort(filter.id)}
+                      >
+                        {filter.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Team Defense Stats Table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead className="bg-gray-800">
+                        <tr>
+                          <th className="p-2 text-left text-gray-300 font-semibold text-sm">Rank</th>
+                          <th className="p-2 text-left text-gray-300 font-semibold text-sm">Team</th>
+                          <th className="p-2 text-right text-gray-300 font-semibold text-sm">OPP PPG</th>
+                          <th className="p-2 text-right text-gray-300 font-semibold text-sm">OPP FG%</th>
+                          <th className="p-2 text-right text-gray-300 font-semibold text-sm">STL</th>
+                          <th className="p-2 text-right text-gray-300 font-semibold text-sm">BLK</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-800">
+                        {teamDefenseStats
+                          .sort((a, b) => {
+                            // Sort in ascending order for defensive metrics (lower is better)
+                            if (teamStatSort === 'oppPpg' || teamStatSort === 'oppFgPct' || teamStatSort === 'oppThreePtPct') {
+                              return a[teamStatSort] - b[teamStatSort];
+                            }
+                            // Sort in descending order for steals, blocks, etc. (higher is better)
+                            return b[teamStatSort] - a[teamStatSort];
+                          })
+                          .map((team, index) => (
+                            <tr key={team.id} className="bg-gray-900 hover:bg-gray-800">
+                              <td className="p-2 text-sm">{index + 1}</td>
+                              <td className="p-2">
+                                <div className="flex items-center">
+                                  <div className="h-6 w-6 bg-purple-600 rounded-full mr-2 flex items-center justify-center font-bold text-xs">
+                                    {team.abbreviation.charAt(0)}
+                                  </div>
+                                  <span className="font-medium text-sm">{team.name}</span>
+                                </div>
+                              </td>
+                              <td className={`p-2 text-right text-sm ${teamStatSort === 'oppPpg' ? 'text-purple-400 font-bold' : 'text-gray-300'}`}>
+                                {team.oppPpg.toFixed(1)}
+                              </td>
+                              <td className={`p-2 text-right text-sm ${teamStatSort === 'oppFgPct' ? 'text-purple-400 font-bold' : 'text-gray-300'}`}>
+                                {team.oppFgPct.toFixed(1)}%
+                              </td>
+                              <td className={`p-2 text-right text-sm ${teamStatSort === 'steals' ? 'text-purple-400 font-bold' : 'text-gray-300'}`}>
+                                {team.steals.toFixed(1)}
+                              </td>
+                              <td className={`p-2 text-right text-sm ${teamStatSort === 'blocks' ? 'text-purple-400 font-bold' : 'text-gray-300'}`}>
+                                {team.blocks.toFixed(1)}
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            )}
-          </div>
-        </div>
-        
-        {/* Stats tables */}
-        <div className="bg-gray-800 rounded-lg p-6">
-          {teamFilter === "all" ? (
-            <>
-              <h2 className="text-xl font-bold mb-4">
-                {statCategory === "scoring" && "Top Scorers"}
-                {statCategory === "rebounds" && "Top Rebounders"}
-                {statCategory === "assists" && "Top Playmakers"}
-                {statCategory === "fantasy" && "Fantasy Leaders"}
-                {statCategory === "prop-success" && "Prop Bet Success Rate Leaders"}
-              </h2>
-              {renderPlayerStatsTable()}
-            </>
-          ) : teamStatView === "offense" ? (
-            <>
-              <h2 className="text-xl font-bold mb-4">Team Offensive Stats</h2>
-              {renderTeamOffenseStats()}
-            </>
-          ) : (
-            <>
-              <h2 className="text-xl font-bold mb-4">Team Defensive Stats</h2>
-              {renderTeamDefenseStats()}
-            </>
+
+              {/* Advanced Stats Cards */}
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                  <h4 className="text-purple-400 text-sm font-semibold mb-2">Highest Scoring</h4>
+                  <div className="flex items-center">
+                    <div className="h-10 w-10 bg-purple-600 rounded-full mr-3 flex items-center justify-center font-bold">
+                      B
+                    </div>
+                    <div>
+                      <div className="font-medium">Boston Celtics</div>
+                      <div className="text-sm text-gray-400">123.8 PPG</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                  <h4 className="text-purple-400 text-sm font-semibold mb-2">Best Defense</h4>
+                  <div className="flex items-center">
+                    <div className="h-10 w-10 bg-purple-600 rounded-full mr-3 flex items-center justify-center font-bold">
+                      M
+                    </div>
+                    <div>
+                      <div className="font-medium">Minnesota Timberwolves</div>
+                      <div className="text-sm text-gray-400">105.8 OPP PPG</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                  <h4 className="text-purple-400 text-sm font-semibold mb-2">Most Improved</h4>
+                  <div className="flex items-center">
+                    <div className="h-10 w-10 bg-purple-600 rounded-full mr-3 flex items-center justify-center font-bold">
+                      O
+                    </div>
+                    <div>
+                      <div className="font-medium">Oklahoma City Thunder</div>
+                      <div className="text-sm text-gray-400">+12.5 Net Rating</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                  <h4 className="text-purple-400 text-sm font-semibold mb-2">Fastest Pace</h4>
+                  <div className="flex items-center">
+                    <div className="h-10 w-10 bg-purple-600 rounded-full mr-3 flex items-center justify-center font-bold">
+                      I
+                    </div>
+                    <div>
+                      <div className="font-medium">Indiana Pacers</div>
+                      <div className="text-sm text-gray-400">104.5 Possessions/Game</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
-        
-        {/* Stats insights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          <div className="bg-gray-800 rounded-lg p-4">
-            <h3 className="font-bold text-lg mb-2 text-purple-400">Scoring Trends</h3>
-            <p className="text-gray-300">League scoring is up 2.8% compared to last season with average points per game now at 114.7.</p>
+
+        {/* Trendspotting Section */}
+        <div className="bg-gray-900 rounded-lg border border-gray-800 p-4 mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-purple-200">NBA Stat Trends</h3>
+            <button className="text-purple-400 hover:text-purple-300 text-sm font-medium">
+              View All Trends
+            </button>
           </div>
-          <div className="bg-gray-800 rounded-lg p-4">
-            <h3 className="font-bold text-lg mb-2 text-purple-400">Prop Bet Analysis</h3>
-            <p className="text-gray-300">Point props have hit the over 58% of the time in the last two weeks, indicating lines may be adjusting slower than player performance.</p>
-          </div>
-          <div className="bg-gray-800 rounded-lg p-4">
-            <h3 className="font-bold text-lg mb-2 text-purple-400">Fantasy Advice</h3>
-            <p className="text-gray-300">Centers are providing the best value in fantasy leagues this season with elite big men contributing across multiple categories.</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="border border-gray-800 rounded-lg p-4 bg-gray-800">
+              <div className="text-sm text-gray-400 mb-1">League-Wide Scoring</div>
+              <div className="text-xl font-semibold text-gray-200">114.7 PPG</div>
+              <div className="flex items-center mt-1">
+                <span className="text-green-400 text-sm font-medium">▲ +3.2 from last season</span>
+              </div>
+              <div className="mt-2 text-sm text-gray-400">
+                Scoring continues to trend up in the NBA
+              </div>
+            </div>
+
+            <div className="border border-gray-800 rounded-lg p-4 bg-gray-800">
+              <div className="text-sm text-gray-400 mb-1">3PT Attempts Per Game</div>
+              <div className="text-xl font-semibold text-gray-200">34.6</div>
+              <div className="flex items-center mt-1">
+                <span className="text-green-400 text-sm font-medium">▲ +1.8 from last season</span>
+              </div>
+              <div className="mt-2 text-sm text-gray-400">
+                Teams continue to embrace the three-point shot
+              </div>
+            </div>
+
+            <div className="border border-gray-800 rounded-lg p-4 bg-gray-800">
+              <div className="text-sm text-gray-400 mb-1">Pace Factor</div>
+              <div className="text-xl font-semibold text-gray-200">99.4</div>
+              <div className="flex items-center mt-1">
+                <span className="text-red-400 text-sm font-medium">▼ -0.7 from last season</span>
+              </div>
+              <div className="mt-2 text-sm text-gray-400">
+                Slight decrease in pace across the league
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+
+        {/* Stats Insights */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 bg-gray-900 rounded-lg border border-gray-800 p-4">
+            <h3 className="text-lg font-semibold text-purple-200 mb-4">Season Statistical Insights</h3>
+            
+            <div className="space-y-4">
+              <div className="border border-gray-800 rounded-lg p-4 hover:bg-gray-800 transition">
+                <h4 className="font-medium text-gray-200 mb-2">Three-Point Revolution Continues</h4>
+                <p className="text-gray-400 text-sm">
+                  The league average for 3-point attempts has reached an all-time high of 34.6 per game, up from 32.8 last season. Teams are shooting 36.2% from beyond the arc, also a slight increase from last season's 35.9%.
+                </p>
+              </div>
+
+              <div className="border border-gray-800 rounded-lg p-4 hover:bg-gray-800 transition">
+                <h4 className="font-medium text-gray-200 mb-2">Rookie Impact Rising</h4>
+                <p className="text-gray-400 text-sm">
+                  This season's rookie class is averaging 11.2 PPG, 4.8 RPG, and 2.6 APG, marking the highest collective scoring average for rookies in the last decade.
+                </p>
+              </div>
+
+              <div className="border border-gray-800 rounded-lg p-4 hover:bg-gray-800 transition">
+                <h4 className="font-medium text-gray-200 mb-2">Defensive Efficiency Trends</h4>
+                <p className="text-gray-400 text-sm">
+                  Despite the scoring boom, the top 5 defensive teams are holding opponents to under 110 points per 100 possessions, showing elite defenses can still thrive in a high-scoring era.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-900 rounded-lg border border-gray-800 p-4">
+            <h3 className="text-lg font-semibold text-purple-200 mb-4">Stats Breakdown</h3>
+            
+            <div className="space-y-3">
+              <div className="bg-gray-800 rounded-lg p-3">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-400">League PPG</span>
+                  <span className="text-sm font-medium text-gray-200">114.7</span>
+                </div>
+                <div className="w-full bg-gray-700 rounded-full h-2">
+                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: "68%" }}></div>
+                </div>
+              </div>
+
+              <div className="bg-gray-800 rounded-lg p-3">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-400">3PT%</span>
+                  <span className="text-sm font-medium text-gray-200">36.2%</span>
+                </div>
+                <div className="w-full bg-gray-700 rounded-full h-2">
+                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: "56%" }}></div>
+                </div>
+              </div>
+
+              <div className="bg-gray-800 rounded-lg p-3">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-400">FT%</span>
+                  <span className="text-sm font-medium text-gray-200">78.3%</span>
+                </div>
+                <div className="w-full bg-gray-700 rounded-full h-2">
+                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: "72%" }}></div>
+                </div>
+              </div>
+
+              <div className="bg-gray-800 rounded-lg p-3">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-400">Assists Per Game</span>
+                  <span className="text-sm font-medium text-gray-200">24.8</span>
+                </div>
+                <div className="w-full bg-gray-700 rounded-full h-2">
+                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: "61%" }}></div>
+                </div>
+              </div>
+
+              <div className="bg-gray-800 rounded-lg p-3">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-400">Turnovers Per Game</span>
+                  <span className="text-sm font-medium text-gray-200">13.2</span>
+                </div>
+                <div className="w-full bg-gray-700 rounded-full h-2">
+                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: "43%" }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 border-t border-gray-800 text-gray-400 py-6 mt-8">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-sm">
+            <p>© 2025 NBA PrizePicks Predictor. All rights reserved.</p>
+            <p className="mt-1">
+              This site is for informational purposes only. Please bet
+              responsibly.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
-  };
+};
 
-  // Function to render team offensive stats
-  const renderTeamOffenseStats = () => {
-    const sortedTeams = [...teamOffenseStats].sort((a, b) => b.ppg - a.ppg);
-    
-    return (
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-800 border-b border-gray-700">
-            <tr>
-              <th className="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Rank</th>
-              <th className="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Team</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Record</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">PPG</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">FG%</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">3P%</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">APG</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Pace</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">ORTG</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Over Hit Rate</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Pts Over L10</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-800">
-            {sortedTeams.map((team, index) => (
-              <tr key={team.id} className="bg-gray-900 hover:bg-gray-800 transition-colors">
-                <td className="py-4 px-4 font-medium text-gray-300">{index + 1}</td>
-                <td className="py-4 px-4">
-                  <div className="flex items-center">
-                    <div className="h-8 w-8 bg-blue-600 rounded-full mr-2 flex items-center justify-center font-bold text-white">
-                      {team.abbreviation.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="font-medium text-white">{team.team}</div>
-                      <div className="text-xs text-gray-400">{team.abbreviation}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.record}</td>
-                <td className="py-4 px-4 text-center font-medium text-white">{team.ppg}</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.fgp}%</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.tpp}%</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.apg}</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.pace}</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.ortg}</td>
-                <td className="py-4 px-4 text-center">
-                  <span className={`font-medium ${
-                    team.overHitRate >= 65 ? "text-green-400" : 
-                    team.overHitRate >= 55 ? "text-yellow-400" : "text-red-400"
-                  }`}>
-                    {team.overHitRate}%</span>
-                </td>
-                <td className="py-4 px-4 text-center">
-                  <span className={`font-medium ${
-                    team.ptsOverLastTen >= 7 ? "text-green-400" : 
-                    team.ptsOverLastTen >= 5 ? "text-yellow-400" : "text-red-400"
-                  }`}>
-                    {team.ptsOverLastTen}/10</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  };
-
-  // Function to render team defensive stats
-  const renderTeamDefenseStats = () => {
-    const sortedTeams = [...teamDefenseStats].sort((a, b) => a.oppPpg - b.oppPpg);
-    
-    return (
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-800 border-b border-gray-700">
-            <tr>
-              <th className="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Rank</th>
-              <th className="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Team</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Record</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">OPP PPG</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">OPP FG%</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">OPP 3P%</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">STL</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">BLK</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">DRTG</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Under Hit Rate</th>
-              <th className="py-3 px-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Pts Under L10</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-800">
-            {sortedTeams.map((team, index) => (
-              <tr key={team.id} className="bg-gray-900 hover:bg-gray-800 transition-colors">
-                <td className="py-4 px-4 font-medium text-gray-300">{index + 1}</td>
-                <td className="py-4 px-4">
-                  <div className="flex items-center">
-                    <div className="h-8 w-8 bg-red-600 rounded-full mr-2 flex items-center justify-center font-bold text-white">
-                      {team.abbreviation.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="font-medium text-white">{team.team}</div>
-                      <div className="text-xs text-gray-400">{team.abbreviation}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.record}</td>
-                <td className="py-4 px-4 text-center font-medium text-white">{team.oppPpg}</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.oppFgp}%</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.oppTpp}%</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.stl}</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.blk}</td>
-                <td className="py-4 px-4 text-center text-gray-300">{team.drtg}</td>
-                <td className="py-4 px-4 text-center">
-                  <span className={`font-medium ${
-                    team.underHitRate >= 65 ? "text-green-400" : 
-                    team.underHitRate >= 55 ? "text-yellow-400" : "text-red-400"
-                  }`}>
-                    {team.underHitRate}%</span>
-                </td>
-                <td className="py-4 px-4 text-center">
-                  <span className={`font-medium ${
-                    team.ptsUnderLastTen >= 7 ? "text-green-400" : 
-                    team.ptsUnderLastTen >= 5 ? "text-yellow-400" : "text-red-400"
-                  }`}>
-                    {team.ptsUnderLastTen}/10</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-                
-                {statCategory === "rebounds" && (
-                  <>
-                    <td className="py-4 px-4 text-center font-medium text-white">{player.rpg}</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.mpg}</td>
-                    <td className="py-4 px-4 text-center">
-                      <span className={`font-medium ${
-                        player.overRate >= 70 ? "text-green-400" : 
-                        player.overRate >= 50 ? "text-yellow-400" : "text-red-400"
-                      }`}>
-                        {player.overRate}%</span>
-                    </td>
-                  </>
-                )}
-                
-                {statCategory === "assists" && (
-                  <>
-                    <td className="py-4 px-4 text-center font-medium text-white">{player.apg}</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{(player.apg / player.tpg).toFixed(1)}</td>
-                    <td className="py-4 px-4 text-center">
-                      <span className={`font-medium ${
-                        player.overRate >= 70 ? "text-green-400" : 
-                        player.overRate >= 50 ? "text-yellow-400" : "text-red-400"
-                      }`}>
-                        {player.overRate}%</span>
-                    </td>
-                  </>
-                )}
-                
-                {statCategory === "fantasy" && (
-                  <>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.ppg}</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.rpg}</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.apg}</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.spg}</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.bpg}</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.tpg}</td>
-                    <td className="py-4 px-4 text-center font-medium text-white">
-                      {(player.ppg + 1.2*player.rpg + 1.5*player.apg + 3*player.spg + 3*player.bpg - player.tpg).toFixed(1)}
-                    </td>
-                  </>
-                )}
-                
-                {statCategory === "prop-success" && (
-                  <>
-                    <td className="py-4 px-4 text-center font-medium text-white">{player.propSuccessRate}%</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.overRate}%</td>
-                    <td className="py-4 px-4 text-center text-gray-300">{player.underRate}%</td>
-                  </>
-                )}
+export default NBAStatsPage;
