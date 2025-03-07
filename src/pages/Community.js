@@ -1,4 +1,4 @@
-iimport React, { useState } from "react";
+import React, { useState } from "react";
 
 const NBAPrizePicksCommunity = () => {
   const [feedFilter, setFeedFilter] = useState("trending");
